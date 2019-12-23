@@ -1,7 +1,7 @@
 [[events]]
 = Events
 
-Zalando’s architecture centers around decoupled microservices and in
+Unifly’s architecture centers around decoupled microservices and in
 that context we favour asynchronous event driven approaches. The
 guidelines in this section focus on how to design and publish events
 intended to be shared for others to consume.
@@ -29,7 +29,7 @@ published can then be validated against the overall structure of its
 event type and the schema for its custom data.
 
 The basic model described above was originally developed in the
-https://github.com/zalando/nakadi[Nakadi project], which acts as a
+https://github.com/unifly/nakadi[Nakadi project], which acts as a
 reference implementation of the event type registry, and as a validating
 publish/subscribe broker for event producers and consumers.
 
@@ -101,7 +101,7 @@ events.
 [#197]
 == {MUST} ensure that events are registered as event types
 
-In Zalando's architecture, events are registered using a structure
+In Unifly's architecture, events are registered using a structure
 called an _Event Type_. The Event Type declares standard information as
 follows:
 

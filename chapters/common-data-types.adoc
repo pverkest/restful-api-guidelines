@@ -21,7 +21,7 @@ APIs are encouraged to include a reference to the global schema for Money.
 SalesOrder:
   properties:
     grand_total:
-      $ref: 'https://opensource.zalando.com/restful-api-guidelines/money-1.0.0.yaml#/Money'
+      $ref: 'https://opensource.unifly.aero/restful-api-guidelines/money-1.0.0.yaml#/Money'
 ----
 
 Please note that APIs have to treat Money as a closed data type, i.e. it's not meant to be used in an inheritance hierarchy. That means the following usage is not allowed:
@@ -38,7 +38,7 @@ Please note that APIs have to treat Money as a closed data type, i.e. it's not m
 === Cons
 
 * Violates the https://en.wikipedia.org/wiki/Liskov_substitution_principle[Liskov Substitution Principle]
-* Breaks existing library support, e.g. https://github.com/zalando/jackson-datatype-money[Jackson Datatype Money]
+* Breaks existing library support, e.g. https://github.com/unifly/jackson-datatype-money[Jackson Datatype Money]
 * Less flexible since both amounts are coupled together, e.g. mixed currencies are impossible
 
 A better approach is to favor https://en.wikipedia.org/wiki/Composition_over_inheritance[composition over inheritance]:
@@ -158,7 +158,7 @@ tree_node:
 ----
 
 These properties are not always strictly necessary, but making them idiomatic
-allows API client developers to build up a common understanding of Zalando's
+allows API client developers to build up a common understanding of Unifly's
 resources. There is very little utility for API consumers in having different
 names or value types for these fields across APIs.
 

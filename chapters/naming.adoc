@@ -10,25 +10,16 @@ _host_, _permission_, and _event names_ within an the application landscape. It
 [yellow-background]#helps to preserve uniqueness of names while giving readers meaningful context
 information about the addressed component#. Besides, the most important aspect
 is, that it allows to keep APIs stable in the case of technical and
-organizational changes (Zalando for example maintains an internal naming convention).
+organizational changes (Unifly for example maintains an internal naming convention).
 
-To make use of this advantages for APIs with a larger <<219, audience>> we
-strongly recommended to follow the functional naming schema for <<224,
-hostnames>>, <<215, permission names>>, and <<213, event names>> in APIs as
-follows:
-
-[cols="25%,75%,options="header"]
-|=========================================================
-| *Functional Naming* | *Audience*
-| *must*   | external-public, external-partner
-| *should* | company-internal, business-unit-internal
-| *may*    | component-internal
-|=========================================================
+To make use of these advantages for APIs with a larger <<219, audience>> we
+strongly recommended to [yellow-background]#follow the functional naming schema for <<224,
+hostnames>>, <<215, permission names>>, and <<213, event names>> in all APIs#
 
 To conduct the functional naming schema, a unique `functional-name` is assigned
-to each functional component. It is built of the domain name of the functional
-group the component is belonging to and a unique a short identifier for the
-functional component itself:
+to each functional component. It is built of the [yellow-background]#domain name of the functional
+group the component is belonging to and a unique and short identifier for the
+functional component itself#:
 
 [source,bnf]
 ----
