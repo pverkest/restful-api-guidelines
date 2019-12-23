@@ -5,7 +5,7 @@
 [#167]
 == {MUST} use JSON to encode structured data
 
-Use JSON-encoded body payload for transferring structured data. The JSON
+[yellow-background]#Use JSON-encoded body payload for transferring structured data.# The JSON
 payload must follow {RFC-7159}[RFC 7159] using a JSON object as top-level data
 structure (if possible) to allow for future extension. This also applies to
 collection resources, where one naturally would assume an array. See also
@@ -33,15 +33,15 @@ Other media types may be used in following cases:
 
 * Transferring binary data or data whose structure is not relevant. This is
   the case if payload structure is not interpreted and consumed by clients as
-  is. Example of such use case is downloading images in formats JPG, PNG, GIF.
-* In addition to JSON version alternative data representations (e.g. in formats
-  PDF, DOC, XML) may be made available through content negotiation.
+  is. Example of such use case is [yellow-background]#downloading images in formats JPG, PNG, GIF.#
+* In addition to JSON version [yellow-background]#alternative data representations (e.g. in formats
+  PDF, DOC, XML) may be made available through content negotiation.#
 
 
 [#239]
 === {SHOULD} encode embedded binary data in `base64url`
 
-Exposing binary data using an alternative media type is generally preferred.
+[yellow-background]#Exposing binary data using an alternative media type is generally preferred.#
 See <<168,the rule above>>.
 
 If an alternative content representation is not desired then binary data should
@@ -55,8 +55,8 @@ following {RFC-7493}#section-4.4[RFC 7493 Section 4.4].
 Previously, this guideline allowed the use of custom media types like 
 `application/x.zalando.article+json`. This usage is not recommended
 anymore and should be avoided, except where it is necessary for cases of
-<<114,media type versioning>>. Instead, just use the standard media type name
-`application/json` (or `application/problem+json` for <<176>>).
+<<114,media type versioning>>. Instead, [yellow-background]#just use the standard media type name#
+`[yellow-background]#application/json#` [yellow-background]#(or# `[yellow-background]#application/problem+json#` for <<176>>).
 
 Custom media types beginning with `x` bring no advantage compared to the
 standard media type for JSON, and make automated processing more difficult.
@@ -100,6 +100,7 @@ Please notice that the list is not exhaustive and everyone is encouraged to prop
 | `string` | <<144, `uuid`>> | {RFC-4122}[RFC 4122] | `"e2ab873e-b295-11e9-9c02-..."`
 |=====================================================================
 
+[yellow-background]#TODO add geo specific formats#
 
 [#169]
 == {MUST} use standard date and time formats
@@ -129,17 +130,20 @@ codes:
 ** (It is "GB", not "UK", even though "UK" has seen some use at Zalando)
 * {ISO-639-1}[ISO 639-1 language code]
 ** {BCP47}[BCP 47] (based on {ISO-639-1}[ISO 639-1])
-   for language variants
-* {ISO-4217}[ISO 4217 currency codes]
+   for language variants. [yellow-background]#Note that {BCP47}[BCP 47] uses `-` as a separator.
+   Eg.# `[yellow-background]#nl#` or `[yellow-background]#nl-BE#`
+* {ISO-4217}[ISO 4217 currency codes]: eg. `[yellow-background]#EUR#`
 
 
 [#171]
-== {MUST} define format for number and integer types
+== {MUST} default format for number and integer types
 
 Whenever an API defines a property of type `number` or `integer`, the
-precision must be defined by the format as follows to prevent clients
+precision may be defined by the format as follows to prevent clients
 from guessing the precision incorrectly, and thereby changing the value
-unintentionally:
+unintentionally. [yellow-background]#If no format is defined,# `[yellow-background]#integer#`
+[yellow-background]#will default to# `[yellow-background]#int32#`[yellow-background]#,
+while# `[yellow-background]#number#` [yellow-background]#will default to# `[yellow-background]#float#`.
 
 [cols="15%,15%,70%",options="header",]
 |=====================================================================
@@ -177,6 +181,5 @@ components:
         page_size:
           type: integer
           description: Number of orders in list
-          format: int32
           example: 42
 ----

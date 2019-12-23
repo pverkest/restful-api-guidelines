@@ -31,8 +31,8 @@ Each of these items is described in greater detail below.
 [#156]
 == {SHOULD} use `gzip` compression
 
-Compress the payload of your API’s responses with gzip, unless there’s a good
-reason not to — for example, you are serving so many requests that the time to
+[yellow-background]#Compress the payload of your API’s responses with gzip, unless there’s a good
+reason not to# — for example, you are serving so many requests that the time to
 compress becomes a bottleneck. This helps to transport data faster over the
 network (fewer bytes) and makes frontends respond faster.
 
@@ -41,6 +41,9 @@ server should also support payload without compression and its client control
 via {Accept-Encoding} request header -- see also {RFC-7231}#section-5.3.4[RFC
 7231 Section 5.3.4]. The server should indicate used gzip compression via the
 {Content-Encoding} header.
+
+*ToDo* Investigate whether we should do this for all APIs or only APIs consumed by
+mobile (or web) clients.
 
 
 [#157]
@@ -54,6 +57,10 @@ https://graphql.org/learn/queries/#fields[GraphQL `fields`] and simple
 queries, and also applied, for instance, for
 https://cloud.google.com/storage/docs/json_api/v1/how-tos/performance#partial-response[Google
 Cloud API's partial responses].)
+
+[yellow-background]#The API should clearly document which fields are supported. If none are documented, the default
+behavior is no support for partial responses at all. Typically our first versions won't support
+filtering.#
 
 
 [[unfiltered]]
@@ -108,7 +115,7 @@ Open API doesn't support you in formally specifying different return object
 schemes depending on a parameter. When you define the field parameter, we
 recommend to provide the following description: `Endpoint supports filtering
 of return object fields as described in
-[Rule #157](https://opensource.zalando.com/restful-api-guidelines/#157)`
+[Rule #157](https://opensource.unifly.aero/restful-api-guidelines/#157)`
 
 The syntax of the query {fields} value is defined by the following
 https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form[BNF] grammar.

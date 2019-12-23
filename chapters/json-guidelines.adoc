@@ -1,10 +1,10 @@
 [[json-guidelines]]
 = JSON guidelines
 
-These guidelines provides recommendations for defining JSON data at Zalando.
+These guidelines provides recommendations for defining JSON data at Unifly.
 JSON here refers to {RFC-7159}[RFC 7159] (which updates {RFC-4627}[RFC 4627]),
 the "application/json" media type and custom JSON media types defined for APIs.
-The guidelines clarifies some specific cases to allow Zalando JSON data to have
+The guidelines clarify some specific cases to allow Unifly JSON data to have
 an idiomatic form across teams and services.
 
 The first some of the following guidelines are about property names, the later
@@ -12,7 +12,7 @@ ones about values.
 
 
 [#118]
-== {MUST} property names must be ASCII snake_case (and never camelCase): `^[a-z_][a-z_0-9]*$`
+== {MUST} property names must be ASCII [yellow-background]#snake_case# (and never camelCase): `^[a-z_][a-z_0-9]*$`
 
 Property names are restricted to ASCII strings. The first
 character must be a letter, or an underscore, and subsequent
@@ -32,8 +32,8 @@ as if it came from the same hand.
 A "map" here is a mapping from string keys to some other type. In JSON this is
 represented as an object, the key-value pairs being represented by property
 names and property values. In Open API schema (as well as in JSON schema) they
-should be represented using additionalProperties with a schema defining the
-value type. Such an object should normally have no other defined properties.
+should be [yellow-background]#represented using additionalProperties with a schema defining the
+value type#. Such an object should normally have no other defined properties.
 
 The map keys don't count as property names in the sense of <<118,rule 118>>,
 and can follow whatever format is natural for their domain. Please document
@@ -80,8 +80,8 @@ An actual JSON object described by this might then look like this:
 [#120]
 == {SHOULD} pluralize array names
 
-To indicate they contain multiple values prefer to pluralize array
-names. This implies that object names should in turn be singular.
+To indicate they contain multiple values prefer to [yellow-background]#pluralize array
+names. This implies that object names should in turn be singular.#
 
 
 [#122]
@@ -89,9 +89,9 @@ names. This implies that object names should in turn be singular.
 
 Schema based JSON properties that are by design booleans must not be
 presented as nulls. A boolean is essentially a closed enumeration of two
-values, true and false. If the content has a meaningful null value,
+values, true and false. [yellow-background]#If the content has a meaningful null value,
 strongly prefer to replace the boolean with enumeration of named values
-or statuses - for example accepted_terms_and_conditions with true or
+or statuses# - for example accepted_terms_and_conditions with true or
 false can be replaced with terms_and_conditions with values yes, no and
 unknown.
 
@@ -101,9 +101,9 @@ unknown.
 
 Open API 3.x allows to mark properties as `required` and as `nullable` to
 specify whether properties may be absent (`{}`) or `null` (`{"example":null}`).
-If a property is defined to be not `required` and `nullable` (see
+[yellow-background]#If a property is defined to be not `required` and `nullable` (see
 <<required-nullable-row-2, 2nd row in Table below>>), this rule demands
-that both cases must be handled in the exact same manner by specification.
+that both cases must be handled in the exact same manner by specification.#
 
 The following table shows all combinations and whether the examples are
 valid:
@@ -142,15 +142,15 @@ to express the third state. Nullable `Option`/`Optional`/`Maybe` types could be
 used but having nullable references of these types completely contradicts their
 purpose.
 
-The only exception to this rule is JSON Merge Patch {RFC-7396}[RFC 7396]) which
+[yellow-background]#The only exception to this rule is JSON Merge Patch {RFC-7396}[RFC 7396]) which
 uses `null` to explicitly indicate property deletion while absent properties are
-ignored, i.e. not modified.
+ignored, i.e. not modified.#
 
 
 [#124]
 == {SHOULD} not use `null` for empty arrays
 
-Empty array values can unambiguously be represented as the empty list, `[]`.
+Empty array values can unambiguously be [yellow-background]#represented as the empty list, `[]`.#
 
 
 [#125]
@@ -162,11 +162,11 @@ Strings are a reasonable target for values that are by design enumerations.
 [#235]
 == {SHOULD} name date/time properties with `_at` suffix
 
-Dates and date-time properties should end with `_at` to distinguish them from
+[yellow-background]#Dates and date-time properties should end with# `[yellow-background]#_at#` to distinguish them from
 boolean properties which otherwise would have very similar or even identical
 names:
 
-- {created_at} rather than {created},
+- [yellow-background]#{created_at} rather than {created},#
 - {modified_at} rather than {modified},
 - `occurred_at` rather than `occurred`, and
 - `returned_at` rather than `returned`.
@@ -178,12 +178,13 @@ guideline and are therefore still accepted for APIs that predate this rule.
 [#126]
 == {SHOULD} define dates properties compliant with RFC 3339
 
-Use the date and time formats defined by {RFC-3339}#section-5.6[RFC 3339]:
+Use the [yellow-background]#date and time formats# defined by {RFC-3339}#section-5.6[RFC 3339]:
 
 * for "date" use strings matching
-`date-fullyear "-" date-month "-" date-mday`, for example: `2015-05-28`
+`date-fullyear "-" date-month "-" date-mday`, for example: `[yellow-background]#2015-05-28#`
 * for "date-time" use strings matching `full-date "T" full-time`, for
-example `2015-05-28T14:07:17Z`
+example `[yellow-background]#2015-05-28T14:07:17Z#`, `[yellow-background]#2015-05-28T14:07:17.12345Z#`,
+or `[yellow-background]#2015-05-28T14:07:17.12Z#`
 
 Note that the
 https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types[Open
@@ -193,13 +194,13 @@ the RFC). Both are specific profiles, a subset of the international standard
 {ISO-8601}[ISO 8601].
 
 A zone offset may be used (both, in request and responses) -- this is simply
-defined by the standards. However, we encourage restricting dates to UTC and
-without offsets. For example `2015-05-28T14:07:17Z` rather than
+defined by the standards. However, we [yellow-background]#encourage restricting dates to UTC and
+without offsets#. For example `2015-05-28T14:07:17Z` rather than
 `2015-05-28T14:07:17+00:00`. From experience we have learned that zone offsets
 are not easy to understand and often not correctly handled. Note also that
 zone offsets are different from local times that might be including daylight
-saving time. Localization of dates should be done by the services that provide
-user interfaces, if required.
+saving time. [yellow-background]#Localization of dates should be done by the services that provide
+user interfaces#, if required.
 
 When it comes to storage, all dates should be consistently stored in UTC
 without a zone offset. Localization should be done locally by the services that
@@ -216,4 +217,8 @@ ambiguity.
 == {SHOULD} define time durations and intervals properties conform to ISO 8601
 
 Schema based JSON properties that are by design durations and intervals could
-be strings formatted as recommended by {ISO-8601}[ISO 8601]({RFC-3339}#appendix-A[Appendix A of RFC 3339 contains a grammar] for durations).
+be strings formatted as recommended by
+{ISO-8601}[ISO 8601]({RFC-3339}#appendix-A[Appendix A of RFC 3339 contains a grammar]
+for durations) such as `[yellow-background]#P34Y6M2DT13H34M13S#` for duration and
+`[yellow-background]#2015-05-28T14:07:17Z/2015-05-28T14:07:17.1234Z#` for a time interval.
+

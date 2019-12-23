@@ -93,38 +93,35 @@ numbers as float / doubles.
 [#174]
 == {MUST} use common field names and semantics
 
-There exist a variety of field types that are required in multiple places. To
+[yellow-background]#There exist a variety of field types that are required in multiple places. To
 achieve consistency across all API implementations, you must use common field
-names and semantics whenever applicable.
+names and semantics whenever applicable.#
 
 [[generic-fields]]
 === Generic fields
 
 There are some data fields that come up again and again in API data:
 
-* [[id]]{id}: the identity of the object. If used, IDs must be opaque strings
-  and not numbers. IDs are unique within some documented context, are stable
+* [yellow-background]#[[id]]{id}: the identity of the object. If used, IDs must be opaque strings
+  and not numbers.# IDs are unique within some documented context, are stable
   and don't change for a given object once assigned, and are never recycled
   cross entities.
-* [[xyz_id]]{xyz_id}: an attribute within one object holding the identifier of
-  another object must use a name that corresponds to the type of the referenced
+  [yellow-background]#TODO: Decide whether we'll enforce the use of links (or HAL) or not.#
+* [yellow-background]#[[xyz_id]]{xyz_id}: an attribute within one object holding the identifier of
+  another object# must use a name that corresponds to the type of the referenced
   object or the relationship to the referenced object followed by `_id` (e.g.
-  `partner_id` not `partner_number`, or `parent_node_id` for the reference to a parent
+  `[yellow-background]#partner_id#` not `partner_number`, or `parent_node_id` for the reference to a parent
   node from a child node, even if both have the type `Node`).
-  *Exception*: We use `customer_number` instead of `customer_id` for customer facing 
-  identification of customers due to legacy reasons. (Hint: `customer_id` used to be defined 
-  as internal only, technical integer key, see
-  https://docs.google.com/document/d/1Lj56Snl6ISn6JsgyXpiRNUjzO7u2DsqBXCgHYvOQi7Y[Naming Decision: `customer_number` vs `customer_id` [internal link]]).
-* [[created_at]]{created_at}: when the object was created. If used, this must
+* [yellow-background]#[[created_at]]{created_at}: when the object was created.# If used, this must
   be a `date-time` construct. Originally named [[created]]{created} before
   adding the <<235, naming conventions for date/time properties>>.
-* [[modified_at]]{modified_at}: when the object was updated. If used, this must
+* [yellow-background]#[[modified_at]]{modified_at}: when the object was updated.# If used, this must
   be a `date-time` construct. Originally named [[modified]]{modified} before
   adding the <<235, naming conventions for date/time properties>>.
-* [[type]]{type}: the kind of thing this object is. If used, the type of this
+* [yellow-background]#[[type]]{type}: the kind of thing this object is.# If used, the type of this
   field should be a string. Types allow runtime information on the entity
   provided that otherwise requires examining the Open API file.
-* [[etag]]{etag}: the <<182, ETag>> of an <<158, embedded sub-resource>>. It
+* [yellow-background]#[[etag]]{etag}: the <<182, ETag>> of an <<158, embedded sub-resource>>#. It
   may be used to carry the {ETag} for subsequent {PUT}/{PATCH} calls (see
   <<etag-in-result-entities>>).
 
@@ -165,6 +162,9 @@ allows API client developers to build up a common understanding of Zalando's
 resources. There is very little utility for API consumers in having different
 names or value types for these fields across APIs.
 
+[yellow-background]#TODO Define _reference, _code, and ???#
+
+
 
 [[link-relation-fields]]
 === Link relation fields
@@ -173,27 +173,27 @@ To foster a consistent look and feel using simple hypertext controls for
 paginating and iterating over collection values the response objects should
 follow a common pattern using the below field semantics:
 
-* [[self]]{self}:the link or cursor in a pagination response or object
+* [yellow-background]#[[self]]{self}#:the link or cursor in a pagination response or object
   pointing to the same collection object or page.
-* [[first]]{first}: the link or cursor in a pagination response or object
+* [yellow-background]#[[first]]{first}#: the link or cursor in a pagination response or object
   pointing to the first collection object or page.
-* [[prev]]{prev}: the link or cursor in a pagination response or object
+* [yellow-background]#[[prev]]{prev}#: the link or cursor in a pagination response or object
   pointing to the previous collection object or page.
-* [[next]]{next}: the link or cursor in a pagination response or object
+* [yellow-background]#[[next]]{next}#: the link or cursor in a pagination response or object
   pointing to the next collection object or page.
-* [[last]]{last}: the link or cursor in a pagination response or object
+* [yellow-background]#[[last]]{last}#: the link or cursor in a pagination response or object
   pointing to the last collection object or page.
 
 Pagination responses should contain the following additional array field to
 transport the page content:
 
-* [[items]]{items}: array of resources, holding all the items of the current
+* [yellow-background]#[[items]]{items}#: array of resources, holding all the items of the current
   page ({items} may be replaced by a resource name).
 
 To simplify user experience, the applied query filters may be returned using
 the following field (see also {GET-with-body}):
 
-* [[query]]{query}: object containing the query filters applied in the search
+* [yellow-background]#[[query]]{query}#: object containing the query filters applied in the search
   request to filter the collection resource.
 
 As Result, the standard response page using <<161, pagination links>> is
@@ -245,6 +245,8 @@ current page.
 
 [[address-fields]]
 === Address fields
+
+[yellow-background]#TODO: Check whether this is the addressee/address we want#
 
 Address structures play a role in different functional and use-case
 contexts, including country variances. All attributes that relate to

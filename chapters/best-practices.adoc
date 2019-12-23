@@ -11,8 +11,8 @@ implementing RESTful APIs.
 == Optimistic locking in RESTful APIs
 
 === Introduction
-Optimistic locking might be used to avoid concurrent writes on the same entity,
-which might cause data loss. A client always has to retrieve a copy of an
+[yellow-background]#Optimistic locking might be used to avoid concurrent writes on the same entity,
+which might cause data loss.# A client always has to retrieve a copy of an
 entity first and specifically update this one. If another version has been
 created in the meantime, the update should fail. In order to make this work,
 the client has to provide some kind of version reference, which is checked by
@@ -27,9 +27,9 @@ approach chosen, might lead to performing additional requests to get the
 current version of the entity that should be updated.
 
 === `ETag` with `If-Match` header
-An {ETag} can only be obtained by performing a {GET} request on the single
+[yellow-background]#An {ETag} can only be obtained by performing a {GET} request on the single
 entity resource before the update, i.e. when using a search endpoint an
-additional request is necessary.
+additional request is necessary.#
 
 Example:
 [source,http]
@@ -68,11 +68,11 @@ Or, if there was an update since the {GET} and the entity's {ETag} has changed:
 * RESTful solution
 
 ==== Cons
-* Many additional requests are necessary to build a meaningful front-end
+* [yellow-background]#Many additional requests are necessary to build a meaningful front-end#
 
 [[etag-in-result-entities]]
 === `ETags` in result entities
-The ETag for every entity is returned as an additional property of that entity.
+[yellow-background]#The ETag for every entity is returned as an additional property of that entity.#
 In a response containing multiple entities, every entity will then have a
 distinct {ETag} that can be used in subsequent {PUT} requests.
 
@@ -110,19 +110,22 @@ Or, if there was an update since the {GET} and the entity's {ETag} has changed:
 * Perfect optimistic locking
 
 ==== Cons
-* Information that only belongs in the HTTP header is part of the business
-  objects
+* [yellow-background]#Information that only belongs in the HTTP header is part of the business
+  objects#
+* [yellow-background]#The representation of a collection of Resources is different from the representation of a
+  single resource#
 
 === Version numbers
+[yellow-background]#This is what we typically use in JPA/Hibernate.#
 The entities contain a property with a version number. When an update is
 performed, this version number is given back to the service as part of the
 payload. The service performs a check on that version number to make sure it
 was not incremented since the consumer got the resource and performs the
-update, incrementing the version number.
+update, [yellow-background]#incrementing the version number, which modifies the resource#
 
-Since this operation implies a modification of the resource by the service, a
+[yellow-background]#Since this operation implies a modification of the resource by the service, a
 {POST} operation on the exact resource (e.g. `POST /orders/O0000042`) should be
-used instead of a {PUT}.
+used instead of a {PUT}.#
 
 In this solution, the `version` property is not `readonly` since it is provided
 at {POST} time as part of the payload.
@@ -158,14 +161,15 @@ database is higher than the one given in the request body:
 * Perfect optimistic locking
 
 ==== Cons
-* Functionality that belongs into the HTTP header becomes part of the
-  business object
-* Using {POST} instead of PUT for an update logic (not a problem in itself,
-  but may feel unusual for the consumer)
+* [yellow-background]#Functionality that belongs into the HTTP header becomes part of the
+  business object#
+* [yellow-background]#Using {POST} instead of PUT for an update logic (not a problem in itself,
+  but may feel unusual for the consumer)#
 
 === `Last-Modified` / `If-Unmodified-Since`
-In HTTP 1.0 there was no {ETag} and the mechanism used for optimistic locking
-was based on a date. This is still part of the HTTP protocol and can be used.
+In HTTP 1.0 there was no {ETag} and the mechanism used for [yellow-background]#optimistic
+locking was based on a date - with a precision limited to seconds.#
+This is still part of the HTTP protocol and can be used.
 Every response contains a {Last-Modified} header with a HTTP date. When
 requesting an update using a {PUT} request, the client has to provide this
 value via the header {If-Unmodified-Since}. The server rejects the request, if
@@ -215,9 +219,12 @@ later than the given date:
   result
 
 ==== Cons
-* If a client communicates with two different instances and their clocks are
-  not perfectly in sync, the locking could potentially fail
+* [yellow-background]#If a client communicates with two different instances and their clocks are
+  not perfectly in sync, the locking could potentially fail#
+* [yellow-background]#If multiple changes happen within one second, only the first one will succeeed.#
 
 === Conclusion
-We suggest to either use the _{ETag} in result entities_ or _{Last-Modified}
-/ {If-Unmodified-Since}_ approach.
+[yellow-background]#If modifications of our resource don't happen that often and impact of mistakes is limited,
+we use the _{Last-Modified} / {If-Unmodified-Since}_ approach. If the resources have strong consistency
+requirements and mistakes cause major damage, we go for `ETag` with `If-Match` header and take the
+performance penalty.#

@@ -7,8 +7,8 @@
 
 Functional naming is a powerful, yet easy way to align global resources as
 _host_, _permission_, and _event names_ within an the application landscape. It
-helps to preserve uniqueness of names while giving readers meaningful context
-information about the addressed component. Besides, the most important aspect
+[yellow-background]#helps to preserve uniqueness of names while giving readers meaningful context
+information about the addressed component#. Besides, the most important aspect
 is, that it allows to keep APIs stable in the case of technical and
 organizational changes (Zalando for example maintains an internal naming convention).
 
@@ -54,7 +54,7 @@ Please see the following rules for detailed functional naming patterns:
 [#224]
 == {MUST} follow naming convention for hostnames
 
-Hostnames in APIs must, respectively should conform to the functional naming
+[yellow-background]#Hostnames in APIs must conform to the functional naming#
 depending on the <<219, audience>> as follows (see <<223>> for details and
 `<functional-name>` definition):
 
@@ -62,17 +62,7 @@ depending on the <<219, audience>> as follows (see <<223>> for details and
 -----
 <hostname>             ::= <functional-hostname> | <application-hostname>
 
-<functional-hostname>  ::= <functional-name>.zalandoapis.com
------
-
-The following application specific legacy convention is *only* allowed for
-hostnames of <<219, component-internal>> APIs:
-
-[source,bnf]
------
-<application-hostname> ::= <application-id>.<organization-unit>.zalan.do
-<application-id>       ::= [a-z][a-z0-9-]*  -- application identifier
-<organization-id>      ::= [a-z][a-z0-9-]*  -- organization unit identifier, e.g. team identifier
+<functional-hostname>  ::= <functional-name>.uniflyapis.aero
 -----
 
 
@@ -81,10 +71,8 @@ hostnames of <<219, component-internal>> APIs:
 
 Example:
 
-[source,http]
-----
-/shipment-orders/{shipment-order-id}
-----
+`[yellow-background]#/shipment-orders/#{shipment-order-id}`
+
 
 This applies to concrete path segments and not the names of path
 parameters. For example `{shipment_order_id}` would be ok as a path
@@ -96,10 +84,7 @@ parameter.
 
 Examples:
 
-[source]
-----
-customer_number, order_id, billing_address
-----
+`[yellow-background]#customer_number, order_id, billing_address#`
 
 
 [#132]
@@ -111,13 +96,13 @@ common abbreviations like "ID."
 
 Examples:
 
-[source,http]
-----
-Accept-Encoding
-Apply-To-Redirect-Ref
-Disposition-Notification-Options
-Original-Message-ID
-----
+`[yellow-background]#Accept-Encoding#`
+
+`[yellow-background]#Apply-To-Redirect-Ref#`
+
+`[yellow-background]#Disposition-Notification-Options#`
+
+`[yellow-background]#Original-Message-ID#`
 
 See also: {RFC-7230}#page-22[HTTP Headers are case-insensitive (RFC 7230)].
 
@@ -128,7 +113,8 @@ on HTTP headers.
 [#134]
 == {MUST} pluralize resource names
 
-Usually, a collection of resource instances is provided (at least API
+Usually, a collection of resource instances is provided,
+so [yellow-background]#we pluralize resource names# (at least API
 should be ready here). The special case of a resource singleton is a
 collection with cardinality 1.
 
@@ -153,8 +139,8 @@ https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#serve
 [#136]
 == {MUST} avoid trailing slashes
 
-The trailing slash must not have specific semantics. Resource paths must
-deliver the same results whether they have the trailing slash or not.
+The trailing slash must not have specific semantics. [yellow-background]#Resource paths must
+deliver the same results whether they have the trailing slash or not.#
 
 
 [#137]
@@ -163,24 +149,26 @@ deliver the same results whether they have the trailing slash or not.
 If you provide query support for searching, sorting, filtering, and
 paginating, you must stick to the following naming conventions:
 
-* [[q]]{q}: default query parameter, e.g. used by browser tab completion;
+[yellow-background]#TODO: AsciiDoc: how do I highlight these examples?#
+
+* [yellow-background]#[[q]]{q}#: default query parameter, e.g. used by browser tab completion;
   should have an entity specific alias, e.g. sku.
-* [[sort]]{sort}: comma-separated list of fields (as defined by <<154>>) to
+* [yellow-background]#[[sort]]{sort}#: comma-separated list of fields (as defined by <<154>>) to
   define the sort order. To indicate sorting direction, fields may be prefixed
   with `+` (ascending) or `-` (descending), e.g. /sales-orders?sort=+id.
-* [[fields]]{fields}: field name expression to retrieve only a subset of fields
+* [yellow-background]#[[fields]]{fields}#: field name expression to retrieve only a subset of fields
   of a resource. See <<157>> below.
-* [[embed]]{embed}: field name expression to expand or embedded sub-entities,
+* [yellow-background]#[[embed]]{embed}#: field name expression to expand or embedded sub-entities,
   e.g. inside of an article entity, expand silhouette code into the silhouette
   object. Implementing {embed} correctly is difficult, so do it with care.
   See <<158>> below.
-* [[offset]]{offset}: numeric offset of the first element provided on a page
+* [yellow-background]#[[offset]]{offset}#: numeric offset of the first element provided on a page
   representing a collection request. See <<pagination>> section below.
-* [[cursor]]{cursor}: an opaque pointer to a page, never to be inspected or
+* [yellow-background]#[[cursor]]{cursor}#: an opaque pointer to a page, never to be inspected or
   constructed by clients. It usually (encrypted) encodes the page position,
   i.e. the identifier of the first or last page element, the pagination
   direction, and the applied query filters to recreate the collection. See
   <<160, pagination>> section below.
-* [[limit]]{limit}: client suggested limit to restrict the number of entries on
+* [yellow-background]#[[limit]]{limit}#: client suggested limit to restrict the number of entries on
   a page. See <<pagination>> section below.
 

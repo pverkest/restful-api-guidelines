@@ -15,7 +15,7 @@ There are two techniques to change APIs without breaking them:
 * follow rules for compatible extensions
 * introduce new API versions and still support older versions
 
-We strongly encourage using compatible API extensions and discourage versioning
+We strongly [yellow-background]#encourage using compatible API extensions and discourage versioning#
 (see <<113>> and <<114>> below). The following guidelines for service providers
 (<<107>>) and consumers (<<108>>) enable us (having Postel’s Law in mind) to
 make compatible changes without versioning.
@@ -24,9 +24,9 @@ make compatible changes without versioning.
 Incompatible changes are changes that are not covered by the compatibility
 rules below. Breaking changes are incompatible changes deployed into operation,
 and thereby breaking running API consumers. Usually, incompatible changes are
-breaking changes when deployed into operation. However, in specific controlled
+breaking changes when deployed into operation. However, [yellow-background]#in specific controlled
 situations it is possible to deploy incompatible changes in a non-breaking way,
-if no API consumer is using the affected API aspects (see also <<deprecation,
+if no API consumer is using the affected API aspects# (see also <<deprecation,
 Deprecation>> guidelines).
 
 *Hint:* Please note that the compatibility guarantees are for the "on the wire"
@@ -39,10 +39,11 @@ expected that code changes are necessary.
 [#107]
 == {SHOULD} prefer compatible extensions
 
-API designers should apply the following rules to evolve RESTful APIs for
-services in a backward-compatible way:
-
-* Add only optional, never mandatory fields.
+API designers should apply the following [yellow-background]#rules to evolve RESTful APIs for
+services in a backward-compatible way:#
+[yellow-background]
+* Add only optional, never mandatory fields, unless the resource supports {PUT} semantics:
+  an old client doing a {PUT} will inadvertendly clear the optional fields of the newer API.
 * Never change the semantic of fields (e.g. changing the semantic from
   customer-number to customer-id, as both are different unique customer keys)
 * Input fields may have (complex) constraints being validated via server-side
@@ -63,7 +64,7 @@ services in a backward-compatible way:
 [#108]
 == {MUST} prepare clients accept compatible API extensions
 
-Service clients should apply the robustness principle:
+[yellow-background]#Service clients should apply the robustness principle#:
 
 * Be conservative with API requests and data passed as input, e.g. avoid to
   exploit definition deficits like passing megabytes of strings with
@@ -91,9 +92,9 @@ providers:
 [#109]
 == {SHOULD} design APIs conservatively
 
-Designers of service provider APIs should be conservative and accurate in what
-they accept from clients:
-
+[yellow-background]#Designers of service provider APIs should be conservative and accurate in what
+they accept from clients:#
+[yellow-background]
 * Unknown input fields in payload or URL should not be ignored; servers should
   provide error feedback to clients via an HTTP 400 response code.
 * Be accurate in defining input data constraints (like formats, ranges, lengths
@@ -104,10 +105,10 @@ they accept from clients:
   implementation while providing freedom for further evolution as compatible
   extensions.
 
-Not ignoring unknown input fields is a specific deviation from Postel's Law
+[yellow-background]#Not ignoring unknown input fields is a specific deviation from Postel's Law
 (e.g. see also +
 https://cacm.acm.org/magazines/2011/8/114933-the-robustness-principle-reconsidered/fulltext[The
-Robustness Principle Reconsidered]) and a strong recommendation. Servers might
+Robustness Principle Reconsidered]) and a strong recommendation.# Servers might
 want to take different approach but should be aware of the following problems
 and be explicit in what is supported:
 
@@ -135,11 +136,11 @@ specific parameter.
 [#110]
 == {MUST} always return JSON objects as top-level data structures
 
-In a response body, you must always return a JSON object (and not e.g. an
-array) as a top level data structure to support future extensibility. JSON
+[yellow-background]#In a response body, you must always return a JSON object (and not e.g. an
+array) as a top level data structure to support future extensibility.# JSON
 objects support compatible extension by additional attributes. This allows you
-to easily extend your response and e.g. add pagination later, without breaking
-backwards compatibility. See <<161>> for an example.
+to easily extend your response and [yellow-background]#e.g. add pagination later, without breaking
+backwards compatibility.# See <<161>> for an example.
 
 Maps (see <<216>>), even though technically objects, are also forbidden as top
 level data structures, since they don't support compatible, future extensions.
@@ -148,16 +149,16 @@ level data structures, since they don't support compatible, future extensions.
 [#111]
 == {MUST} treat Open API specification as open for extension by default
 
-The Open API 2.0 specification is not very specific on default extensibility
+The Open API 3.0 specification is not very specific on default extensibility
 of objects, and redefines JSON-Schema keywords related to extensibility, like
-`additionalProperties`. Following our overall compatibility guidelines, Open
-API object definitions are considered open for extension by default as per
+`additionalProperties`. Following our overall compatibility guidelines, [yellow-background]#Open
+API object definitions are considered open for extension by default# as per
 http://json-schema.org/latest/json-schema-validation.html#rfc.section.5.18[Section
 5.18 "additionalProperties"] of JSON-Schema.
 
-When it comes to Open API 2.0, this means an `additionalProperties` declaration
+When it comes to Open API 3.0, this means an `additionalProperties` declaration
 is not required to make an object definition extensible:
-
+[yellow-background]
 * API clients consuming data must not assume that objects are closed for
   extension in the absence of an `additionalProperties` declaration and must
   ignore fields sent by the server they cannot process. This allows API
@@ -174,7 +175,7 @@ prevents objects being extended in the future.
 
 Note that this guideline concentrates on default extensibility and does not
 exclude the use of `additionalProperties` with a schema as a value, which might
-be appropriate in some circumstances, e.g. see <<216>>. 
+be appropriate in some circumstances, e.g. see <<216>>.
 
 
 [#112]
@@ -183,8 +184,8 @@ be appropriate in some circumstances, e.g. see <<216>>.
 Enumerations are per definition closed sets of values, that are assumed to be
 complete and not intended for extension. This closed principle of enumerations
 imposes compatibility issues when an enumeration must be extended. To avoid
-these issues, we strongly recommend to use an open-ended list of values instead
-of an enumeration unless:
+these issues, we strongly recommend to [yellow-background]#use an open-ended list of values instead
+of an enumeration# unless:
 
 1. the API has full control of the enumeration values, i.e. the list of values
   does not depend on any external tool or interface, and
@@ -218,9 +219,9 @@ systems
 (http://martinfowler.com/articles/enterpriseREST.html[supplementary
 reading]).
 
-If changing an API can’t be done in a compatible way, then proceed in one of
-these three ways:
-
+[yellow-background]#If changing an API can’t be done in a compatible way, then proceed in one of
+these three ways:#
+[yellow-background]
 * create a new resource (variant) in addition to the old resource variant
 * create a new service endpoint — i.e. a new application with a new API (with a
   new domain name)
@@ -228,7 +229,7 @@ these three ways:
   microservice
 
 As we discourage versioning by all means because of the manifold disadvantages,
-we strongly recommend to only use the first two approaches.
+we [yellow-background]#strongly recommend to only use the first two approaches#.
 
 
 [#114]
@@ -240,9 +241,9 @@ versioning, see below). Media type versioning is less tightly coupled since
 it supports content negotiation and hence reduces complexity of release
 management.
 
-Media type versioning: Here, version information and media type are provided
-together via the HTTP Content-Type header — e.g.
-`application/x.zalando.cart+json;version=2`. For incompatible changes, a new
+[yellow-background]#Media type versioning: Here, version information and media type are provided
+together via the HTTP Content-Type header — e.g.#
+`[yellow-background]#application/x.unifly.cart+json;version=2#`. For incompatible changes, a new
 media type version for the resource is created. To generate the new
 representation version, consumer and producer can do content negotiation using
 the HTTP Content-Type and Accept headers. Note: This versioning only applies to
@@ -252,7 +253,7 @@ In this example, a client wants only the new version of the response:
 
 [source,http]
 ----
-Accept: application/x.zalando.cart+json;version=2
+Accept: application/x.unifly.cart+json;version=2
 ----
 
 A server responding to this, as well as a client sending a request with content
@@ -261,7 +262,7 @@ version:
 
 [source,http]
 ----
-Content-Type: application/x.zalando.cart+json;version=2
+Content-Type: application/x.unifly.cart+json;version=2
 ----
 
 Using header versioning should:
@@ -273,10 +274,10 @@ Using header versioning should:
 *Hint:* Until an incompatible change is necessary, it is recommended to stay
 with the standard `application/json` media type.
 
-Further reading: 
+Further reading:
 https://blog.apisyouwonthate.com/api-versioning-has-no-right-way-f3c75457c0b7[API
 Versioning Has No "Right Way"] provides an overview on different versioning
-approaches to handle breaking changes without being opinionated. 
+approaches to handle breaking changes without being opinionated.
 
 
 [#115]
@@ -288,5 +289,5 @@ and deployed. If the consumer also supports hypermedia links — even in their
 APIs — to drive workflows (HATEOAS), this quickly becomes complex. So does
 coordinating version upgrades — especially with hyperlinked service
 dependencies — when using URL versioning. To avoid this tighter coupling and
-complexer release management we do not use URI versioning, and go instead with
-media type versioning and content negotiation (see above).
+complexer release management [yellow-background]#we do not use URI versioning, and go instead with
+media type versioning and content negotiation (see above).#

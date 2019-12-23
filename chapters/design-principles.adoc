@@ -30,11 +30,15 @@ of web service industry that also use the term for their REST
 approximations — in fact, in today's industry full HATEOAS compliant
 APIs are a very rare exception.]
 
-An important principle for API design and usage is Postel's
+[yellow-background]#An important principle for API design and usage is Postel's
 Law, aka http://en.wikipedia.org/wiki/Robustness_principle[The
-Robustness Principle] (see also https://tools.ietf.org/html/rfc1122[RFC 1122]):
-
+Robustness Principle] (see also https://tools.ietf.org/html/rfc1122[RFC 1122]):#
+[yellow-background]
 * Be liberal in what you accept, be conservative in what you send
+
+[yellow-background]#This certainly applies to service clients, but service provider APIs should be
+conservative and accurate in what they accept. This is a deliberate deviation
+from Postel's Law!#
 
 _Readings:_ Some interesting reads on the RESTful API design style and service architecture:
 
@@ -59,16 +63,16 @@ Styles and the Design of Network-Based Software Architectures]
 [[api-as-a-product]]
 == API as a product
 
-As mentioned above, Zalando is transforming from an online shop into an
-expansive fashion platform comprising a rich set of products following a
-Software as a Platform (SaaP) model for our business partners. As a
+As mentioned above, Unifly is transforming from an application into an
+expansive UTM platform comprising of a set of products offering an API
+based integration model with our business partners. As a
 company we want to deliver products to our (internal and external)
 customers which can be consumed like a service.
 
-Platform products provide their functionality via (public) APIs; hence,
+[yellow-background]#Platform products provide their functionality via (public) APIs; hence,
 the design of our APIs should be based on the API as a Product
-principle:
-
+principle:#
+[yellow-background]
 * Treat your API as product and act like a product owner
 * Put yourself into the place of your customers; be an advocate for
   their needs
@@ -98,11 +102,9 @@ API as a Product is closely related to our <<100,API First principle>>
 [[api-first]]
 == API first 
 
-API First is one of our
-https://github.com/zalando/engineering-principles[engineering
-and architecture principles]. In a nutshell API First requires two
-aspects:
-
+API First is one of our engineering and architecture principles. [yellow-background]#In a nutshell API First requires two
+aspects:#
+[yellow-background]
 * define APIs first, before coding its implementation, using a standard specification
 language
 * get early review feedback from peers and client developers
